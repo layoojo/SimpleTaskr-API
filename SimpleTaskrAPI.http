@@ -1,0 +1,29 @@
+@SimpleTaskrAPI_HostAddress = http://localhost:5005
+
+### Register a user (set Jwt:SecretKey in the environment before starting the API)
+POST {{SimpleTaskrAPI_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "sample-user",
+  "password": "a-long-example-password"
+}
+
+### Log in
+POST {{SimpleTaskrAPI_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "sample-user",
+  "password": "a-long-example-password"
+}
+
+### Access a protected route (paste the accessToken from register/login)
+@token = paste-access-token-here
+GET {{SimpleTaskrAPI_HostAddress}}/tasks
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Protected routes reject requests without a bearer token
+GET {{SimpleTaskrAPI_HostAddress}}/tasks
+Accept: application/json
